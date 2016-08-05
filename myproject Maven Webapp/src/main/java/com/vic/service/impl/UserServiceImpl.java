@@ -17,7 +17,7 @@ public class UserServiceImpl implements IUserService {
 	private UserMapper userMapper;
 	
 	@Override
-	public int deleteByPrimaryKey(Integer id) {
+	public int deleteByPrimaryKey(String id) {
 		logger.info("删除id为:"+id+"的用户");
 		return this.userMapper.deleteByPrimaryKey(id);
 	}
@@ -34,7 +34,7 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	@Override
-	public User selectByPrimaryKey(Integer id) {
+	public User selectByPrimaryKey(String id) {
 		logger.warn("查找id为:"+id+"的用户");
 		return this.userMapper.selectByPrimaryKey(id);
 	}

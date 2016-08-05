@@ -3,13 +3,13 @@ package com.vic.dao;
 import com.vic.model.User;
 
 public interface UserMapper {
-    int deleteByPrimaryKey(Integer id);
+    int deleteByPrimaryKey(String uuid);
 
     int insert(User record);
 
     int insertSelective(User record);
 
-    User selectByPrimaryKey(Integer id);
+    User selectByPrimaryKey(String uuid);
 
     int updateByPrimaryKeySelective(User record);
 

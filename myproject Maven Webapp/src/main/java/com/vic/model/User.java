@@ -1,18 +1,24 @@
 package com.vic.model;
 
+import java.util.Date;
+
 public class User {
-    private Integer id;
+    private String uuid;
 
     private String username;
 
     private String password;
 
-    public Integer getId() {
-        return id;
+    private String email;
+
+    private Date createTime;
+
+    public String getUuid() {
+        return uuid;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setUuid(String uuid) {
+        this.uuid = uuid == null ? null : uuid.trim();
     }
 
     public String getUsername() {
@@ -29,5 +35,21 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password == null ? null : password.trim();
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email == null ? null : email.trim();
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 }
