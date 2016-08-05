@@ -1,14 +1,18 @@
 package com.vic.controller;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.vic.model.User;
 import com.vic.service.IUserService;
@@ -25,7 +29,9 @@ public class UserController {
     }
 	
 	@RequestMapping("/addUser")
-	public String addUser(HttpServletRequest request,Model model){  
+	public @ResponseBody Map<String,Object> addUser(HttpServletRequest request,HttpServletResponse response,Model model){  
+		Map<String,Object> rmap = new HashMap<String,Object>(); 
+		
 		UUID uuid = UUID.randomUUID();
         String username = request.getParameter("username");
         String password = request.getParameter("password");
@@ -43,9 +49,16 @@ public class UserController {
         
         if(i==1){
         	model.addAttribute("user", user);
+        	rmap.put("resultCode", 1);
+        	rmap.put("model", model);
+        	rmap.put("msg", "注册成功");
+        }else{
+        	rmap.put("resultCode", -1);
+        	rmap.put("msg", "注册失败，数据有误");
         }
         
-		return "showUser";  
+        return rmap;
+         
     }
 	
 	@RequestMapping("/showUser")

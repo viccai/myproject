@@ -24,13 +24,20 @@ public class UserServiceImpl implements IUserService {
 
 	@Override
 	public int insert(User record) {
-		logger.info("新增用户");
+		logger.info("新增用户:"+record.getUsername());
 		return this.userMapper.insert(record);
 	}
 
 	@Override
 	public int insertSelective(User record) {
-		return this.userMapper.insertSelective(record);
+		try{
+			logger.info("增加用户:"+record.getUsername()+"用户");
+			return this.userMapper.insertSelective(record);
+		}catch(Exception e){
+			e.printStackTrace();
+			logger.error(e);
+			return -1;
+		}
 	}
 
 	@Override

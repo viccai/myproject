@@ -9,7 +9,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <head>
     <base href="<%=basePath%>">
     
-    <title>My JSP 'exception.jsp' starting page</title>
+    <title>非法请求</title>
     
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
@@ -22,7 +22,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
   </head>
   
-  <body>
- 	无效的访问页面<br>
+  <body BGCOLOR="#FDF5E6">
+
+	<H2>出错了，肯定哪里不对!</H2>
+		
+	<li>请点击<A HREF="/myproject">这里</A>回到首页.</li>
+	
   </body>
 </html>

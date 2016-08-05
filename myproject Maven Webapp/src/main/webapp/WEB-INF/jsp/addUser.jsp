@@ -10,24 +10,48 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <base href="<%=basePath%>">
     
     <title>注册用户</title>
-    
-	<meta http-equiv="pragma" content="no-cache">
-	<meta http-equiv="cache-control" content="no-cache">
-	<meta http-equiv="expires" content="0">    
-	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
-	<meta http-equiv="description" content="This is my page">
+
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
+	<script src="./js/jquery-1.6.2.min.js"></script>
+	<script type="text/javascript">
+		function register(){
+			var username = $("#username").attr("value");
+			var password = $("#password").attr("value");
+			var email = $("#email").attr("value");
 
+			$.ajax({
+			    type : "POST",
+			    dataType: "json",
+			    url : "user/addUser?username="+username+"&password="+password+"&email="+email,
+			    success : function(data) {
+			        if(data.resultCode==-1){
+				        $("#msg").html(data.msg);
+			        }
+			        if(data.resultCode==1){
+			        	$("#from").hide();
+				        $("#msg").html(data.msg);
+			        }
+			        //window.location.href ="showUser" ;
+			    },
+			    error : function(data) {
+			        // 输出错误信息;
+			        console.log(data.info);
+			    }
+			});
+		
+		}
+	</script>
   </head>
   
   <body>  
-    <form name="f" method="post" action="user/addUser">
-    	用户名：<input type="text" name="username" size="20">
-                密 码：<input type="password" name="password" size="20">
-                电子邮箱：<input type="text" name="email" size="50"/>
-        <input type="submit" value="提交" name="submit">
-    </form>
+    <div id="from">
+    	用户名：<input id="username" type="text" name="username" size="20">
+                密 码：<input id="password" type="password" name="password" size="20">
+                电子邮箱：<input id="email" type="text" name="email" size="50"/>
+        <input type="submit" value="提交" name="submit" onclick="register()">
+    </div>
+    <!-- </form> -->
   </body>
 </html>
