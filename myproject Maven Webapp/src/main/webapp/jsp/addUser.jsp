@@ -52,6 +52,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 电子邮箱：<input id="email" type="text" name="email" size="50"/>
         <input type="submit" value="提交" name="submit" onclick="register()">
     </div>
-    <!-- </form> -->
+    <div id="msg"></div>
   </body>
 </html>

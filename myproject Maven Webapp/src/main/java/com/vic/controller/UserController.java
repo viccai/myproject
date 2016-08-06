@@ -46,7 +46,7 @@ public class UserController {
         user.setCreateTime(date);
         
         int i = this.userService.insertSelective(user);
-        
+        System.out.println("i="+i);
         if(i==1){
         	model.addAttribute("user", user);
         	rmap.put("resultCode", 1);
@@ -56,7 +56,7 @@ public class UserController {
         	rmap.put("resultCode", -1);
         	rmap.put("msg", "注册失败，数据有误");
         }
-        
+        System.out.println("rmap="+rmap);
         return rmap;
          
     }
