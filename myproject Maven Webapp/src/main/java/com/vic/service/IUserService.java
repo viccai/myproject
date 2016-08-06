@@ -1,6 +1,9 @@
 package com.vic.service;
 
+import java.util.List;
+
 import com.vic.model.User;
+import com.vic.util.Page;
 
 public interface IUserService {
 	
@@ -15,5 +18,6 @@ public interface IUserService {
 	public int updateByPrimaryKeySelective(User record);
 
 	public int updateByPrimaryKey(User record);
-	 
+	
+	public List<User> selectUserList(Page<User> page);
 }

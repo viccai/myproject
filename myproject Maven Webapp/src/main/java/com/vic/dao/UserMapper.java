@@ -1,6 +1,9 @@
 package com.vic.dao;
 
+import java.util.List;
+
 import com.vic.model.User;
+import com.vic.util.Page;
 
 public interface UserMapper {
     int deleteByPrimaryKey(String uuid);
@@ -14,4 +17,6 @@ public interface UserMapper {
     int updateByPrimaryKeySelective(User record);
 
     int updateByPrimaryKey(User record);
+    
+    List<User> findPage(Page<User> page);
 }

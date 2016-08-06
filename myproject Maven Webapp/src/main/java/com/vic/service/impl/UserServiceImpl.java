@@ -1,5 +1,7 @@
 package com.vic.service.impl;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -7,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.vic.dao.UserMapper;
 import com.vic.model.User;
 import com.vic.service.IUserService;
+import com.vic.util.Page;
 
 @Service("userService")
 public class UserServiceImpl implements IUserService {
@@ -54,6 +57,11 @@ public class UserServiceImpl implements IUserService {
 	@Override
 	public int updateByPrimaryKey(User record) {
 		return this.userMapper.updateByPrimaryKey(record);
+	}
+
+	@Override
+	public List<User> selectUserList(Page<User> page) {
+		return this.userMapper.findPage(page);
 	}
 
 }

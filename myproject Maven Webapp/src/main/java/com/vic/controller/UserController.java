@@ -2,6 +2,7 @@ package com.vic.controller;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.vic.model.User;
 import com.vic.service.IUserService;
+import com.vic.util.Page;
 
 @Controller
 @RequestMapping("/user")
@@ -62,10 +64,24 @@ public class UserController {
     }
 	
 	@RequestMapping("/showUser")
-	public String toIndex(HttpServletRequest request,Model model){  
+	public String showUser(HttpServletRequest request,Model model){  
         String userId = request.getParameter("id");  
         User user = this.userService.selectByPrimaryKey(userId);  
         model.addAttribute("user", user);  
         return "showUser";  
     }
+	
+	@RequestMapping("/getUserList")
+	public String getUserList(HttpServletRequest request,Model model){  
+		System.out.println("getuserlist");
+		
+        Page<User> page = new Page<User>();
+        List<User> users = this.userService.selectUserList(page);
+        
+        model.addAttribute("userList", users);
+        model.addAttribute("page", page);
+        
+        return "userList";  
+    }
+	
 }
