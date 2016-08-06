@@ -36,8 +36,10 @@ public class TestMyBatis {
 	@Test
 	public void test1(){
 		System.out.println(userService);
+
 		//User user = userService.selectByPrimaryKey("7f10f6b6-1be9-4cbd-93aa-14f31842998d");  
         //System.out.println(user.getUsername());  
+		
         // logger.info("值："+user.getUserName());  
         //logger.info(JSON.toJSONString(user));
 		Page<User> page = new Page<User>();
