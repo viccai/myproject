@@ -108,7 +108,6 @@ public class PageInterceptor implements Interceptor {
 	 * @return
 	 */
 	private String getPageSql(Page<?> page, String sql) {
-		System.out.println("sql=="+sql);
 		StringBuffer sqlBuffer = new StringBuffer(sql);
 		if ("mysql".equalsIgnoreCase(databaseType)) {
 			return getMysqlPageSql(page, sqlBuffer);
@@ -177,7 +176,6 @@ public class PageInterceptor implements Interceptor {
 		String sql = boundSql.getSql();
 		// 通过查询Sql语句获取到对应的计算总记录数的sql语句
 		String countSql = this.getCountSql(sql);
-		System.out.println("countSql="+countSql);
 		// 通过BoundSql获取对应的参数映射
 		List<ParameterMapping> parameterMappings = boundSql
 				.getParameterMappings();

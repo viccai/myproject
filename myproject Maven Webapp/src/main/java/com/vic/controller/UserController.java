@@ -73,9 +73,11 @@ public class UserController {
 	
 	@RequestMapping("/getUserList")
 	public String getUserList(HttpServletRequest request,Model model){  
-		System.out.println("getuserlist");
 		
         Page<User> page = new Page<User>();
+        page.setPageNo(1);
+        page.setPageSize(4);
+        
         List<User> users = this.userService.selectUserList(page);
         
         model.addAttribute("userList", users);
