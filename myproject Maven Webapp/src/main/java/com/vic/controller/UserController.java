@@ -26,8 +26,12 @@ public class UserController {
 	private IUserService userService;
 	
 	@RequestMapping("/toAddUser")
-	public String toAddUser(HttpServletRequest request,Model model){  
-        return "addUser";  
+	public String toAddUser(HttpServletRequest request,Model model){
+		User user = (User) request.getSession().getAttribute("user");
+		if (user != null) {
+			model.addAttribute(user);
+		}
+		return "addUser"; 
     }
 	
 	@RequestMapping("/addUser")
@@ -59,6 +63,30 @@ public class UserController {
         	rmap.put("msg", "注册失败，数据有误");
         }
         System.out.println("rmap="+rmap);
+        return rmap;
+         
+    }
+	
+	@RequestMapping("/login")
+	public @ResponseBody Map<String,Object> login(HttpServletRequest request,HttpServletResponse response,Model model){  
+		Map<String,Object> rmap = new HashMap<String,Object>(); 
+		
+		String email = request.getParameter("email");
+        String password = request.getParameter("password");
+        
+        User user = this.userService.selectByEmail(email);
+        
+        if(user.getPassword().equals(password)){
+        	request.getSession().setAttribute("user", user);
+        	model.addAttribute("user", user);
+        	rmap.put("resultCode", 1);
+        	rmap.put("model", model);
+        	rmap.put("msg", user.getUsername());
+        }else{
+        	rmap.put("resultCode", -1);
+        	rmap.put("msg", "登陆失败，请确认登陆信息");
+        }
+        
         return rmap;
          
     }

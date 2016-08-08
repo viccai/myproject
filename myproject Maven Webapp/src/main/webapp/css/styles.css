@@ -1,0 +1,55 @@
+@charset "UTF-8";
+
+.main {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-image: url(../image/bg-image_a-z/a.jpg);
+	background-size: cover;
+}
+
+.top {
+	position: absolute;
+	width: 100%;
+	height: 70px;
+	background: #9a6f5f;
+	filter: alpha(opacity = 50);
+	opacity: 0.5;
+}
+
+.top-box {
+	position: absolute;
+	width: 50px;
+	height: 50px;
+	background: #8bc34a;
+	filter: alpha(opacity = 50);
+	opacity: 0.5;
+	margin: 5px 5px;
+	cursor: pointer;
+}
+
+.hide {
+	display: none;
+}
+
+.show {
+	display: block;
+}
+
+.login-text {
+	font-size: 18px;
+	font-family: "微软雅黑";
+	color: #fff;
+	text-align: center;
+	line-height: 60px;
+}
+
+.buttom-text {
+	font-size: 14px;
+	font-family: "微软雅黑";
+	color: #fff;
+	text-align: center;
+	line-height: 50px;
+}

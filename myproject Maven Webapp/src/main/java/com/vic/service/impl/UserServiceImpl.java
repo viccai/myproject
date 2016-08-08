@@ -64,4 +64,9 @@ public class UserServiceImpl implements IUserService {
 		return this.userMapper.findPage(page);
 	}
 
+	@Override
+	public User selectByEmail(String email) {
+		return this.userMapper.selectByEmail(email);
+	}
+
 }
