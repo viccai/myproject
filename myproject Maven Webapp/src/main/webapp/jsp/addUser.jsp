@@ -73,7 +73,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body>
-	用户信息:<c:if test="${user!=null}">${user.username}</c:if>
+	<c:if test="${user!=null}">用户信息:${user.username}</c:if>
     <div id="add">
     	用户名：<input id="username" type="text" name="username" size="20">
                 密 码：<input id="password" type="password" name="password" size="20">
