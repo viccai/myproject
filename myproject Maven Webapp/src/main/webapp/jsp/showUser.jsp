@@ -24,5 +24,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   
   <body>  
     ${user.username}  
+    ${user.createTime}
   </body>
 </html>

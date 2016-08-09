@@ -96,7 +96,10 @@
       create_time = #{createTime,jdbcType=TIMESTAMP}
     where uuid = #{uuid,jdbcType=VARCHAR}
   </update>
-  <select id="findPage" resultType="com.vic.model.User" parameterType="com.vic.util.Page">  
-    select * from user t order by t.create_time desc  
+  <select id="findPage" resultMap="BaseResultMap" resultType="com.vic.model.User" parameterType="com.vic.util.Page">  
+    select 
+    <include refid="Base_Column_List" /> 
+    from user t 
+    order by t.create_time desc  
   </select>
 </mapper>
