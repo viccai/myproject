@@ -54,7 +54,7 @@ public class UserController {
 		user.setCreateTime(date);
 
 		int i = this.userService.insertSelective(user);
-		System.out.println("i=" + i);
+		
 		if (i == 1) {
 			model.addAttribute("user", user);
 			rmap.put("resultCode", 1);
@@ -64,7 +64,7 @@ public class UserController {
 			rmap.put("resultCode", -1);
 			rmap.put("msg", "注册失败，数据有误");
 		}
-		System.out.println("rmap=" + rmap);
+		
 		return rmap;
 
 	}
@@ -82,13 +82,85 @@ public class UserController {
 
 		if (user.getPassword().equals(password)) {
 			request.getSession().setAttribute("user", user);
-			model.addAttribute("user", user);
+			// model.addAttribute("user", user);
 			rmap.put("resultCode", 1);
-			rmap.put("model", model);
+			// rmap.put("model", model);
 			rmap.put("msg", user.getUsername());
 		} else {
 			rmap.put("resultCode", -1);
 			rmap.put("msg", "登陆失败，请确认登陆信息");
+		}
+
+		return rmap;
+
+	}
+
+	@RequestMapping("/findUser")
+	public @ResponseBody
+	Map<String, Object> findUser(HttpServletRequest request,
+			HttpServletResponse response, Model model) {
+		String userId = request.getParameter("uuid");
+
+		User user = this.userService.selectByPrimaryKey(userId);
+
+		Map<String, Object> rmap = new HashMap<String, Object>();
+
+		if (user != null) {
+			rmap.put("resultUser", user);
+			rmap.put("resultCode", 1);
+		} else {
+			rmap.put("resultCode", -1);
+		}
+
+		return rmap;
+
+	}
+
+	@RequestMapping("/updateUser")
+	public @ResponseBody
+	Map<String, Object> updateUser(HttpServletRequest request,
+			HttpServletResponse response, Model model) {
+		String uuid = request.getParameter("uuid");
+		String username = request.getParameter("username");
+		String password = request.getParameter("password");
+		String email = request.getParameter("email");
+		Date date = new Date();
+
+		User user = new User();
+		user.setUuid(uuid.toString());
+		user.setUsername(username);
+		user.setPassword(password);
+		user.setEmail(email);
+		user.setCreateTime(date);
+
+		int i = this.userService.updateByPrimaryKey(user);
+
+		Map<String, Object> rmap = new HashMap<String, Object>();
+
+		if (i == 1) {
+			rmap.put("resultCode", 1);
+		} else {
+			rmap.put("resultCode", -1);
+		}
+
+		return rmap;
+
+	}
+
+	@RequestMapping("/deleteUser")
+	public @ResponseBody
+	Map<String, Object> deleteUser(HttpServletRequest request,
+			HttpServletResponse response, Model model) {
+		String uuid = request.getParameter("uuid");
+
+		int i = this.userService.deleteByPrimaryKey(uuid);
+
+		Map<String, Object> rmap = new HashMap<String, Object>();
+
+		if (i == 1) {
+			rmap.put("resultCode", 1);
+		} else {
+			rmap.put("resultCode", -1);
 		}
 
 		return rmap;
