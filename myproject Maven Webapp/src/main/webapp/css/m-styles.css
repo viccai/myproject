@@ -1,5 +1,86 @@
 @charset "UTF-8";
 
+.m-login-main {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-image: url(../image/bg-image_a-z/b.jpg);
+	background-size: cover;
+}
+
+.m-login-box {
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 130px;
+	width: 500px;
+	height: 300px;
+	background-image: url(../image/bg-image_a-z/b.jpg);
+	/*background-color: #efefef;
+	background-size: cover;
+	filter: alpha(opacity = 50);
+	-moz-opacity: 0.5;
+	-khtml-opacity: 0.5;
+	opacity: 0.5;*/
+	border-radius: 15px;
+}
+
+.m-login-from {
+	position: absolute;
+	width: 400px;
+	height: 200px;
+	margin: 50px 50px;
+	background-color: #efefef;
+	/*background-image: url(../image/bg-image_a-z/b.jpg);
+	background-size: cover;*/
+	border-radius: 5px;
+}
+
+.m-login-from-line-one {
+	width: 400px;
+	height: 40px;
+	margin-top: 25px;
+}
+
+.m-login-from-line-two {
+	width: 400px;
+	height: 40px;
+	margin-top: 5px;
+}
+
+.m-login-from-line-three {
+	width: 400px;
+	height: 40px;
+	margin-top: 5px;
+}
+
+.m-login-title {
+	width: 100px;
+	float: left;
+	line-height: 40px;
+	text-align: center;
+}
+
+.m-login-input {
+	width: 200px;
+	line-height: 36px;
+}
+
+.m-login-msg {
+	width: 100px;
+	line-height: 40px;
+	text-align: center;
+	color: #e2554a;
+}
+
+.m-login-buttom {
+	width: 200px;
+	height: 30px;
+	margin-top: 5px;
+	margin-left: 100px;
+}
+
 .body {
 	background-color: #ececec;
 	margin: 0px 0px;

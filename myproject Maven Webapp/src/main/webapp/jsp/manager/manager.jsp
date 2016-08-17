@@ -30,6 +30,9 @@
 	function manager_main(){
 		$("#mian").attr("src","<%=path%>/jsp/manager/welcome.jsp");
 	}
+	function manager_manager(){
+		$("#mian").attr("src","manager/getManagerList");
+	}
 	function manager_user(){
 		$("#mian").attr("src","user/getUserList");
 	}
@@ -39,6 +42,7 @@
 <body class="body">
 	<div class="header">
 		<button onclick="manager_main()" class="menu-button">首页</button>
+		<button onclick="manager_manager()" class="menu-button">管理员用户管理</button>
 		<button onclick="manager_user()" class="menu-button">用户管理</button>
 	</div>
 	<div class="main">

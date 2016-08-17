@@ -25,6 +25,6 @@
 </head>
 
 <body class="body">
-	<c:if test="${user!=null}">welcome:${user.username}</c:if>
+	<c:if test="${manager!=null}">welcome:${manager.username}</c:if>
 </body>
 </html>

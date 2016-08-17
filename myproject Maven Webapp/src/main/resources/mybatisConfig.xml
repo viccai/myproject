@@ -8,5 +8,6 @@
     </plugins>
 	<mappers>
 		<mapper resource="com/vic/model/mapping/UserMapper.xml" />
+		<mapper resource="com/vic/model/mapping/ManagerMapper.xml" />
 	</mappers>
 </configuration>

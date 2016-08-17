@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.vic.model.User;
 import com.vic.service.IUserService;
+import com.vic.util.MD5Util;
 import com.vic.util.Page;
 
 @Controller
@@ -49,7 +50,7 @@ public class UserController {
 		User user = new User();
 		user.setUuid(uuid.toString());
 		user.setUsername(username);
-		user.setPassword(password);
+		user.setPassword(MD5Util.encode(password));
 		user.setEmail(email);
 		user.setCreateTime(date);
 
@@ -80,15 +81,20 @@ public class UserController {
 
 		User user = this.userService.selectByEmail(email);
 
-		if (user.getPassword().equals(password)) {
-			request.getSession().setAttribute("user", user);
-			// model.addAttribute("user", user);
-			rmap.put("resultCode", 1);
-			// rmap.put("model", model);
-			rmap.put("msg", user.getUsername());
-		} else {
-			rmap.put("resultCode", -1);
-			rmap.put("msg", "登陆失败，请确认登陆信息");
+		if(user!=null){
+			if (user.getPassword().equals(MD5Util.encode(password))) {
+				request.getSession().setAttribute("user", user);
+				// model.addAttribute("user", user);
+				rmap.put("resultCode", 1);
+				// rmap.put("model", model);
+				rmap.put("msg", user.getUsername());
+			} else {
+				rmap.put("resultCode", -1);
+				rmap.put("msg", "密码错误");
+			}
+		}else{
+			rmap.put("resultCode", -2);
+			rmap.put("msg", "用户不存在");
 		}
 
 		return rmap;
@@ -129,7 +135,7 @@ public class UserController {
 		User user = new User();
 		user.setUuid(uuid.toString());
 		user.setUsername(username);
-		user.setPassword(password);
+		user.setPassword(MD5Util.encode(password));
 		user.setEmail(email);
 		user.setCreateTime(date);
 
