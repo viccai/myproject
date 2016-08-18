@@ -110,13 +110,21 @@
 		        }
 		        if(data.resultCode==1){
 		        	var html="";
-		        	html += "<input id='uuid' type='text' name='uuid' value='"+data.resultUser.uuid+"' />";
-			    	html += "用户名：<input id='username' type='text' name='username' value='"+data.resultUser.username+"'/>";
-			        html += "密 码：<input id='password' type='password' name='password' value='"+data.resultUser.password+"'/>";
-			        html += "电子邮箱：<input id='email' type='text' name='email' value='"+data.resultUser.email+"'/>";
-			        html += "<div id='msg'></div>";
-			        html += "<input type='submit' value='确定' onclick='update()'>";
-			        html += "<input type='submit' value='取消' onclick='editCancle()'>";
+		        	html += "<div class='edit-form'>";
+					html += "<div class='edit-form-line'>";
+		        	html += "<input id='uuid' type='hidden' name='uuid' value='"+data.resultUser.uuid+"' />";
+		        	html += "<span class='edit-title'>用 户 名：</span>";
+			    	html += "<input id='username' class='edit-input' type='text' name='username' value='"+data.resultUser.username+"'/>";
+			    	html += "</div><div class='edit-form-line'>";
+			        html += "<span class='edit-title'>密&nbsp;&nbsp;码：</span>";
+			        html += "<input id='password' class='edit-input' type='password' name='password' value='"+data.resultUser.password+"'/>";
+			        html += "</div><div class='edit-form-line'>";
+			        html += "<span class='edit-title'>电子邮箱：</span>";
+			        html += "<input id='email' class='edit-input' type='text' name='email' readOnly='true' value='"+data.resultUser.email+"'/>";
+			        html += "</div><div class='edit-form-line'>";
+			        html += "<input class='edit-buttom' type='submit' value='确定' onclick='update()'>";
+			        html += "<input class='edit-buttom' type='submit' value='取消' onclick='editCancle()'>";
+			        html += "</div></div>";
 			        $("#edit").html(html);
 		        	$("#user-edit").css('display','block');
 		        }
@@ -166,7 +174,7 @@
 
 <body class="body">
 	<div id="user-list" class="user-list">
-		<p>用户管理--用户列表<button onclick="toAddUser()">增加</button></p>
+		<span>用户管理&rarr;用户列表&nbsp;&hearts;<button onclick="toAddUser()">增加</button>&hearts;</span>
 		<table>
 			<tr>
 				<td>用户名</td>
@@ -201,11 +209,24 @@
 		<div class="user-box" onclick="addCancle()">
 		</div>
 		<div id="add" class="add">
-	    	用户名：<input id="add-username" type="text" name="add-username" size="20">
-	                密 码：<input id="add-password" type="password" name="add-password" size="20">
-	                电子邮箱：<input id="add-email" type="text" name="add-email" size="50"/>
-	        <input type="submit" value="增加" name="submit" onclick="addUser()">
-	        <input type="submit" value="取消" name="submit" onclick="addCancle()">
+			<div class="add-form">
+				<div class="add-form-line">
+					<span class="add-title">用 户 名：</span>
+	    			<input id="add-username" class="add-input" type="text" name="add-username" size="20">
+	    		</div>
+	    		<div class="add-form-line">
+	    			<span class="add-title">密&nbsp;&nbsp;码：</span>
+	                <input id="add-password" class="add-input" type="password" name="add-password" size="20">
+	            </div>
+	            <div class="add-form-line">
+	            	<span class="add-title">电子邮箱：</span>
+					<input id="add-email" class="add-input"  type="text" name="add-email" size="50"/>
+				</div>
+				<div class="add-form-line">
+			        <input type="submit" class="add-buttom" value="增加" name="submit" onclick="addUser()">
+			        <input type="submit" class="add-buttom" value="取消" name="submit" onclick="addCancle()">
+		        </div>
+	        </div>
 		</div>
 	</div>
 </body>

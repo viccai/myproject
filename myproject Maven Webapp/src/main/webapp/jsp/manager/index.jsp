@@ -6,18 +6,12 @@
 			+ path + "/";
 %>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE html>
 <html>
 <head>
 <base href="<%=basePath%>">
 
 <title>manager login</title>
-
-<meta http-equiv="pragma" content="no-cache">
-<meta http-equiv="cache-control" content="no-cache">
-<meta http-equiv="expires" content="0">
-<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
-<meta http-equiv="description" content="This is my page">
 
 <link rel="shortcut icon" href="./favicon.ico" />
 <link rel="bookmark" href="./favicon.ico" />
@@ -74,14 +68,14 @@
 		<div id="login" class="m-login-box">
 			<div class="m-login-from">
 				<div class="m-login-from-line-one">
-					<a class="m-login-title">账&nbsp;号：</a>
+					<span class="m-login-title">账&nbsp;号：</span>
 					<input id="l-username" class="m-login-input" type="text" name="username" placeholder="用户名" />
-					<a id="loginUsernameMsg" class="m-login-msg"></a>
+					<span id="loginUsernameMsg" class="m-login-msg"></span>
 				</div>
 				<div class="m-login-from-line-two">
-					<a class="m-login-title">密&nbsp;码：</a>
+					<span class="m-login-title">密&nbsp;码：</span>
 					<input id="l-password" class="m-login-input" type="password" name="password" placeholder="密码" />
-					<a id="loginPasswordMsg" class="m-login-msg"></a>
+					<span id="loginPasswordMsg" class="m-login-msg"></span>
 				</div>
 				<div class="m-login-from-line-three">
 					<input type="submit" class="m-login-buttom" value="登陆" name="submit" onclick="login()">

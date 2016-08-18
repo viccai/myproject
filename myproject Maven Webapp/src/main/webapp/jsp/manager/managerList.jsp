@@ -54,6 +54,27 @@
 		$("#manager-edit").css('display','none');
 		$("#manager-add").css('display','block');
 	}
+	function checkUsername(){
+		var username = $("#add-username").attr("value");
+		
+		$.ajax({
+		    type : "POST",
+		    dataType: "json",
+		    url : "manager/checkManagerUsername?username="+username,
+		    success : function(data) {
+		        if(data.resultCode==-1){
+		        	$("#add-user-msg").html("&times;");
+		        }
+		        if(data.resultCode==1){
+		        	$("#add-user-msg").html("&radic;");
+		        }
+		    },
+		    error : function(data) {
+		        // 输出错误信息;
+		        console.log(data.info);
+		    }
+		});
+	}
 	function addManager(){
 		var username = $("#add-username").attr("value");
 		var password = $("#add-password").attr("value");
@@ -66,6 +87,7 @@
 		        if(data.resultCode==-1){
 		        	// 输出错误信息;
 			        console.log("增加用户失败");
+			        $("#add-manager-msg").html(data.msg);
 		        }
 		        if(data.resultCode==1){
 		        	window.location.href = "manager/getManagerList";
@@ -109,14 +131,21 @@
 		        }
 		        if(data.resultCode==1){
 		        	var html="";
-		        	html += "<input id='uuid' type='text' name='uuid' value='"+data.resultUser.uuid+"' />";
-			    	html += "用户名：<input id='username' type='text' name='username' value='"+data.resultUser.username+"'/>";
-			        html += "密 码：<input id='password' type='password' name='password' value='"+data.resultUser.password+"'/>";
-			        html += "<div id='msg'></div>";
-			        html += "<input type='submit' value='确定' onclick='update()'>";
-			        html += "<input type='submit' value='取消' onclick='editCancle()'>";
+					html += "<div class='edit-form'>";
+					html += "<div class='edit-form-line-one'>";
+		        	html += "<input id='uuid' type='hidden' name='uuid' value='"+data.resultUser.uuid+"' />";
+		        	html += "<input id='type' type='hidden' name='type' value='"+data.resultUser.type+"' />";
+			    	html += "<span class='edit-title'>用户名：</span>";
+					html += "<input id='username' class='edit-input' type='text' name='username' readOnly='true' value='"+data.resultUser.username+"'/>";
+					html += "</div><div class='edit-form-line-two'>";
+			        html += "<span class='edit-title'>密&nbsp;码：</span>";
+					html += "<input id='password' class='edit-input' type='password' name='password' value='"+data.resultUser.password+"'/>";
+			        html += "</div><div class='edit-form-line-three'>";
+			        html += "<input class='edit-buttom' type='submit' value='确定' onclick='update()'>";
+			        html += "<input class='edit-buttom' type='submit' value='取消' onclick='editCancle()'>";
+					html += "</div></div>";
 			        $("#edit").html(html);
-		        	$("#user-edit").css('display','block');
+		        	$("#manager-edit").css('display','block');
 		        }
 		    },
 		    error : function(data) {
@@ -130,11 +159,12 @@
 		var uuid = $("#uuid").attr("value");
 		var username = $("#username").attr("value");
 		var password = $("#password").attr("value");
+		var type = $("#type").attr("value");
 		
 		$.ajax({
 		    type : "POST",
 		    dataType: "json",
-		    url : "manager/updateManager?uuid="+uuid+"&username="+username+"&password="+password,
+		    url : "manager/updateManager?uuid="+uuid+"&username="+username+"&password="+password+"&type="+type,
 		    success : function(data) {
 		        if(data.resultCode==-1){
 		        	// 输出错误信息;
@@ -163,7 +193,7 @@
 
 <body class="body">
 	<div id="manager-list" class="user-list">
-		<p>用户管理--管理员列表<button onclick="toAddManager()">增加</button></p>
+		<span>用户管理&rarr;管理员列表&nbsp;&spades;<button onclick="toAddManager()">增加</button>&spades;</span>
 		<table>
 			<tr>
 				<td>用户名</td>
@@ -198,10 +228,22 @@
 		<div class="manager-box" onclick="addCancle()">
 		</div>
 		<div id="add" class="add">
-	    	用户名：<input id="add-username" type="text" name="add-username" size="20">
-	                密 码：<input id="add-password" type="password" name="add-password" size="20">
-	        <input type="submit" value="增加" name="submit" onclick="addManager()">
-	        <input type="submit" value="取消" name="submit" onclick="addCancle()">
+			<div class="add-form">
+		    	<div class="add-form-line-one">
+			    	<span class="add-title">用户名：</span>
+			    	<input id="add-username" class="add-input" type="text" name="add-username" onchange="checkUsername()">
+			    	<span id="add-user-msg" class="add-msg"></span>
+		    	</div>
+		    	<div class="add-form-line-two">
+			    	<span class="add-title">密&nbsp;码：</span>
+			    	<input id="add-password" class="add-input" type="password" name="add-password" >
+		        </div>
+		        <div class="add-form-line-three">
+			        <input class="add-buttom" type="submit" value="增加" name="submit" onclick="addManager()">
+			        <input class="add-buttom" type="submit" value="取消" name="submit" onclick="addCancle()">
+			    </div>
+			    <span id="add-manager-msg" class="add-msg"></span>
+	        </div>
 		</div>
 	</div>
 </body>

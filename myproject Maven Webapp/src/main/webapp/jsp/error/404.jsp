@@ -11,13 +11,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     
     <title>404</title>
 
+	<link rel="shortcut icon" href="./favicon.ico" />
+	<link rel="bookmark" href="./favicon.ico" />
+
   </head>
   
   <body BGCOLOR="#FDF5E6">
 
 	<H2>404了，好像哪里不对!</H2>
 		
-	<li>请点击<A HREF="/myproject">这里</A>回到首页.</li>
+	<span>请点击<A HREF="/myproject">这里</A>回到首页.</span>
 	
   </body>
 </html>

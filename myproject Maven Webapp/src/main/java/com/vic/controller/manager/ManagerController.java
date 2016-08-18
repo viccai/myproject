@@ -20,22 +20,40 @@ import com.vic.service.IManagerService;
 import com.vic.util.MD5Util;
 import com.vic.util.Page;
 
-
 @Controller
 @RequestMapping("/manager")
 public class ManagerController {
 	@Resource
 	private IManagerService managerService;
-	
+
 	@RequestMapping("")
-	public String toLogin(HttpServletRequest request,Model model){
-		return "manager/index"; 
-    }
-	
+	public String toLogin(HttpServletRequest request, Model model) {
+		return "manager/index";
+	}
+
 	@RequestMapping("/manager")
-	public String manager(HttpServletRequest request,Model model){
-		return "manager/manager"; 
-    }
+	public String manager(HttpServletRequest request, Model model) {
+		return "manager/manager";
+	}
+
+	@RequestMapping("/checkManagerUsername")
+	public @ResponseBody Map<String, Object> checkManagerUsername(HttpServletRequest request,HttpServletResponse response,Model model){
+		Map<String, Object> rmap = new HashMap<String, Object>();
+		
+		String username = request.getParameter("username");
+		
+		Manager manager = this.managerService.selectByUsername(username);
+
+		if (manager != null) {
+			rmap.put("resultCode", -1);
+			rmap.put("msg", "用户名已经被使用");
+		} else {
+			rmap.put("resultCode", 1);
+			rmap.put("msg", "该用户名可以使用");
+		}
+		
+		return rmap;
+	}
 	
 	@RequestMapping("/addManager")
 	public @ResponseBody
@@ -55,7 +73,7 @@ public class ManagerController {
 		manager.setCreateDatetime(date);
 
 		int i = this.managerService.insertSelective(manager);
-		
+
 		if (i == 1) {
 			model.addAttribute("manager", manager);
 			rmap.put("resultCode", 1);
@@ -65,13 +83,91 @@ public class ManagerController {
 			rmap.put("resultCode", -1);
 			rmap.put("msg", "创建失败，数据有误");
 		}
-		
+
 		return rmap;
 
 	}
-	
+
+	@RequestMapping("/findManager")
+	public @ResponseBody
+	Map<String, Object> findManager(HttpServletRequest request,
+			HttpServletResponse response, Model model) {
+		String userId = request.getParameter("uuid");
+
+		Manager manager = this.managerService.selectByPrimaryKey(userId);
+
+		Map<String, Object> rmap = new HashMap<String, Object>();
+
+		if (manager != null) {
+			rmap.put("resultUser", manager);
+			rmap.put("resultCode", 1);
+		} else {
+			rmap.put("resultCode", -1);
+		}
+
+		return rmap;
+
+	}
+
+	@RequestMapping("/updateManager")
+	public @ResponseBody
+	Map<String, Object> updateManager(HttpServletRequest request,
+			HttpServletResponse response, Model model) {
+		String uuid = request.getParameter("uuid");
+		String username = request.getParameter("username");
+		String password = request.getParameter("password");
+		int type = Integer.parseInt(request.getParameter("type"));
+		Date date = new Date();
+
+		Manager manager = new Manager();
+		manager.setUuid(uuid.toString());
+		manager.setUsername(username);
+		manager.setPassword(MD5Util.encode(password));
+		manager.setType(type);
+		manager.setCreateDatetime(date);
+
+		int i = this.managerService.updateByPrimaryKey(manager);
+
+		Map<String, Object> rmap = new HashMap<String, Object>();
+
+		if (i == 1) {
+			rmap.put("resultCode", 1);
+		} else {
+			rmap.put("resultCode", -1);
+		}
+
+		return rmap;
+
+	}
+
+	@RequestMapping("/deleteManager")
+	public @ResponseBody
+	Map<String, Object> deleteManager(HttpServletRequest request,
+			HttpServletResponse response, Model model) {
+		String uuid = request.getParameter("uuid");
+
+		int i = this.managerService.deleteByPrimaryKey(uuid);
+
+		Map<String, Object> rmap = new HashMap<String, Object>();
+
+		if (i == 1) {
+			rmap.put("resultCode", 1);
+		} else {
+			rmap.put("resultCode", -1);
+		}
+
+		return rmap;
+
+	}
+
 	@RequestMapping("/getManagerList")
 	public String getManagerList(HttpServletRequest request, Model model) {
+
+		Manager manager = (Manager) request.getSession()
+				.getAttribute("manager");
+		if (manager == null) {
+			return "error/noLoginError";
+		}
 
 		String no = request.getParameter("pageNo");
 		int pageNo = 1;
@@ -91,19 +187,19 @@ public class ManagerController {
 
 		return "manager/managerList";
 	}
-	
+
 	@RequestMapping("/login")
 	public @ResponseBody
 	Map<String, Object> login(HttpServletRequest request,
 			HttpServletResponse response, Model model) {
 		Map<String, Object> rmap = new HashMap<String, Object>();
-System.out.println("zhelile1");
+
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 
 		Manager manager = this.managerService.selectByUsername(username);
-		System.out.println("manager="+manager);
-		if(manager!=null){
+
+		if (manager != null) {
 			if (manager.getPassword().equals(MD5Util.encode(password))) {
 				request.getSession().setAttribute("manager", manager);
 				// model.addAttribute("user", user);
@@ -114,7 +210,7 @@ System.out.println("zhelile1");
 				rmap.put("resultCode", -1);
 				rmap.put("msg", "密码错误");
 			}
-		}else{
+		} else {
 			rmap.put("resultCode", -2);
 			rmap.put("msg", "用户不存在");
 		}

@@ -9,27 +9,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <head>
     <base href="<%=basePath%>">
     
-    <title>exception</title>
+    <title>noLoginError</title>
     
     <link rel="shortcut icon" href="./favicon.ico" />
 	<link rel="bookmark" href="./favicon.ico" />
-    
-	<meta http-equiv="pragma" content="no-cache">
-	<meta http-equiv="cache-control" content="no-cache">
-	<meta http-equiv="expires" content="0">    
-	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
-	<meta http-equiv="description" content="This is my page">
-	<!--
-	<link rel="stylesheet" type="text/css" href="styles.css">
-	-->
 
   </head>
   
   <body BGCOLOR="#FDF5E6">
 
-	<H2>出错了，肯定哪里不对!</H2>
+	<H2>您还没有登陆！</H2>
 		
-	<span>请点击<A HREF="/myproject">这里</A>回到首页.</span>
+	<span>请点击<A HREF="/myproject/manager" target="_parent">这里</A>登陆.</span>
 	
   </body>
 </html>
