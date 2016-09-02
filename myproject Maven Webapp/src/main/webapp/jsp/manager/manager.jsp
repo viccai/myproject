@@ -41,15 +41,19 @@
 
 <body class="body">
 	<div class="header">
-		<button onclick="manager_main()" class="menu-button">首页</button>
-		<button onclick="manager_manager()" class="menu-button">管理员用户管理</button>
-		<button onclick="manager_user()" class="menu-button">用户管理</button>
+		<div class="main-menu">
+			<button onclick="manager_main()" class="menu-button">首页</button>
+			<button onclick="manager_manager()" class="menu-button">管理员用户管理</button>
+			<button onclick="manager_user()" class="menu-button">用户管理</button>
+		</div>
 	</div>
 	<div class="main">
 		<iframe id="mian" class="iframe" src="<%=path%>/jsp/manager/welcome.jsp">
 			
 		</iframe>
 	</div>
-	<div class="fooder">底部</div>
+	<div class="fooder">
+		&copy; 2016 email:wxymai14@163.com
+	</div>
 </body>
 </html>

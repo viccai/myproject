@@ -91,6 +91,16 @@
 	background-color: #9e9e9e;
 	width: 100%;
 	height: 10%;
+	
+	display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.main-menu{
+	width: 80%;
 }
 
 .fooder {
@@ -98,6 +108,14 @@
 	background-color: #9e9e9e;
 	width: 100%;
 	height: 10%;
+	
+	display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    font-family: 'Microsoft Yahei','simsun', "arial", "sans-serif";
 }
 
 .main {
@@ -114,4 +132,20 @@
 	marginheight: 0;
 	scrolling: no;
 	allowtransparency: yes;
+}
+
+.menu-button{
+	width: 120px;
+	height: 40px;
+	background-color: #000000;
+    color: #ffffff;
+    font-size: 14px;
+}
+
+.menu-button:HOVER{
+	width: 120px;
+	height: 40px;
+	background-color: #cecece;
+    color: #ffffff;
+    font-size: 14px;
 }
