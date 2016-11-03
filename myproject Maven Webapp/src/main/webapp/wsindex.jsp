@@ -1,5 +1,5 @@
-<%@ page language="java" import="java.util.*,com.vic.model.Manager" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://"
@@ -8,57 +8,49 @@
 	String mpath = request.getServerName() + ":" + request.getServerPort() + path + "/";
 	//System.out.println("ip=="+mpath);
 %>
-
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<base href="<%=basePath%>">
+<%
+	session.setAttribute("user", "vic");
+%>
+<title>WebSocket/SockJS Echo Sample (Adapted from Tomcat's echo
+	sample)</title>
+<style type="text/css">
+#connect-container {
+	float: left;
+	width: 400px
+}
 
-<title>manager login</title>
+#connect-container div {
+	padding: 5px;
+}
 
-<style type="text/css">  
-    #connect-container {  
-        float: left;  
-        width: 400px  
-    }  
+#console-container {
+	float: left;
+	margin-left: 15px;
+	width: 400px;
+}
 
-    #connect-container div {  
-        padding: 5px;  
-    }  
+#console {
+	border: 1px solid #CCCCCC;
+	border-right-color: #999999;
+	border-bottom-color: #999999;
+	height: 170px;
+	overflow-y: scroll;
+	padding: 5px;
+	width: 100%;
+}
 
-    #console-container {  
-        float: left;  
-        margin-left: 15px;  
-        width: 400px;  
-    }  
-
-    #console {  
-        border: 1px solid #CCCCCC;  
-        border-right-color: #999999;  
-        border-bottom-color: #999999;  
-        height: 170px;  
-        overflow-y: scroll;  
-        padding: 5px;  
-        width: 100%;  
-    }  
-
-    #console p {  
-        padding: 0;  
-        margin: 0;  
-    }  
+#console p {
+	padding: 0;
+	margin: 0;
+}
 </style>
 
-<meta http-equiv="pragma" content="no-cache">
-<meta http-equiv="cache-control" content="no-cache">
-<meta http-equiv="expires" content="0">
-<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
-<meta http-equiv="description" content="This is my page">
-
-<link rel="stylesheet" type="text/css" href="./css/main-styles.css">
-
 <script src="./js/sockjs.js"></script>
+
 <script type="text/javascript">
-	
 	var ws = null;
 	var url = null;
 	var transports = [];
@@ -87,12 +79,12 @@
 		}
 		//websocket = new SockJS("http://localhost:8080/SpringWebSocketPush/sockjs/websck");  
 		ws.onopen = function() {
-			//alert('open');
+			alert('open');
 			setConnected(true);
 			//log('Info: connection opened.');  
 		};
 		ws.onmessage = function(event) {
-			//alert('Received:' + event.data);
+			alert('Received:' + event.data);
 			log('Received: ' + event.data);
 		};
 		ws.onclose = function(event) {
@@ -151,14 +143,8 @@
 		console.scrollTop = console.scrollHeight;
 	}
 </script>
-
 </head>
-<%
-	session.setAttribute("user", ((Manager)request.getSession().getAttribute("manager")).getUuid());
-%>
-<body class="body">
-	<c:if test="${manager!=null}">welcome:${manager.username}</c:if>
-	
+<body>
 	<noscript>
 		<h2 style="color: #ff0000">Seems your browser doesn't support
 			Javascript! Websockets rely on Javascript being enabled. Please
@@ -201,6 +187,6 @@
 			<div id="console"></div>
 		</div>
 	</div>
-	
 </body>
+
 </html>

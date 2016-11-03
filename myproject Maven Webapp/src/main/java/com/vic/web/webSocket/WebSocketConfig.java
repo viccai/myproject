@@ -5,9 +5,9 @@ import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.socket.config.annotation.*;
  
-@Configuration
-@EnableWebMvc
-@EnableWebSocketMessageBroker
+//@Configuration
+//@EnableWebMvc
+//@EnableWebSocketMessageBroker
 public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
  
     @Override
