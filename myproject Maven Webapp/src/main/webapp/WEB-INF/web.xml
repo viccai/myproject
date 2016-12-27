@@ -107,7 +107,7 @@
 		<!-- stomp、sockjs的webSocket页面
 		<welcome-file>sswebs.html</welcome-file> -->
 		<!-- webSocket页面 -->
-		<welcome-file>wsindex.jsp</welcome-file>
+		<welcome-file>webrtc.html</welcome-file>
 	</welcome-file-list>
 
 	<!-- 异常跳转页面 -->

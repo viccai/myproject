@@ -9,8 +9,8 @@
 	//System.out.println("ip=="+mpath);
 %>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
+<!doctype html>
+<html lang="zh-CN">
 <head>
 <base href="<%=basePath%>">
 
@@ -57,6 +57,7 @@
 <link rel="stylesheet" type="text/css" href="./css/main-styles.css">
 
 <script src="./js/sockjs.js"></script>
+<script src="http://lib.sinaapp.com/js/jquery/1.8.3/jquery.min.js"></script>
 <script type="text/javascript">
 	
 	var ws = null;
@@ -67,6 +68,8 @@
 		document.getElementById('connect').disabled = connected;
 		document.getElementById('disconnect').disabled = !connected;
 		document.getElementById('echo').disabled = !connected;
+		document.getElementById('echo_file').disabled = !connected;
+		document.getElementById('send_video').disabled = !connected;
 	}
 
 	function connect() {
@@ -93,7 +96,27 @@
 		};
 		ws.onmessage = function(event) {
 			//alert('Received:' + event.data);
-			log('Received: ' + event.data);
+			//log('Received: ' + event.data);
+			
+			if(typeof(event.data)=="string"){  
+				log('Received: ' + event.data);
+				var img = document.getElementById("imgDiv");  
+   				//img.innerHTML = "<img src = "+url+" />";
+                img.innerHTML = "<video src = "+event.data+" autoplay></video>";
+		    }else{  
+		    	var reader = new FileReader();  
+		        reader.onload = function(event){  
+		            if(event.target.readyState == FileReader.DONE){  
+		                var url = event.target.result;  
+		    			//alert(url);  
+		                var img = document.getElementById("imgDiv");  
+		   				//img.innerHTML = "<img src = "+url+" />";
+		                img.innerHTML = "<video src = "+url+" autoplay></video>";
+		            }  
+		        };
+		        reader.readAsDataURL(event.data);
+		    }
+			
 		};
 		ws.onclose = function(event) {
 			setConnected(false);
@@ -115,6 +138,114 @@
 			var message = document.getElementById('message').value;
 			log('Sent: ' + message);
 			ws.send(message);
+		} else {
+			alert('connection not established, please connect.');
+		}
+	}
+	//发送文件
+	function echo_file() {
+		if (ws != null) {
+			
+			//var inputElement = document.getElementById("file");
+			//var file = inputElement.files;
+			//var reader = new FileReader();
+			//以二进制形式读取文件
+			//reader.readAsArrayBuffer(file);
+			//文件读取完毕后该函数响应
+			//reader.onload = function loaded(evt) {
+			        //var binaryString = evt.target.result;
+			        //log('Sent: file');
+			        //发送文件
+			        //ws.send(binaryString);
+			//};
+			
+			var inputElement = document.getElementById("file");
+	        var fileList = inputElement.files;
+	        
+	        for ( var i = 0; i < fileList.length; i++) {
+	            console.log(fileList[i]);
+	            log(fileList[i].name);
+	            //发送文件名
+	            ws.send(fileList[i].name);
+				//reader.readAsBinaryString(fileList[i]);
+				//读取文件
+				var reader = new FileReader();
+	            reader.readAsArrayBuffer(fileList[i]);
+				//reader.readAsText(fileList[i]);
+				//文件读取完毕后该函数响应
+				var size = fileList[i].size;
+				
+	            reader.onload = function loaded(evt) {
+	                var binaryString = evt.target.result;
+	                // Handle UTF-16 file dump
+	                log("\n开始发送文件");
+	                //alert("开始发送文件");
+	                //alert("开始发送2:"+size);
+	                ws.send(binaryString,size);
+	                alert("wang");
+	            };
+	        }
+	        return false;
+			
+		} else {
+			alert('connection not established, please connect.');
+		}
+	}
+	
+	function send_video(){
+		if (ws != null) {
+			
+			var getUserMedia = (navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia);
+
+			getUserMedia.call(navigator, {
+				video: true,
+				audio: true
+			}, function(localMediaStream) {
+				var video = document.getElementById('video');
+				video.src = window.URL.createObjectURL(localMediaStream);
+				video.onloadedmetadata = function(e) {
+					console.log("Label: " + localMediaStream.label);
+					console.log("AudioTracks" , localMediaStream.getAudioTracks());
+					console.log("VideoTracks" , localMediaStream.getVideoTracks());
+				};
+				
+				//alert(localMediaStream);
+				
+				
+				/*var reader = new FileReader();
+	            reader.readAsArrayBuffer(fileList[i]);
+				//reader.readAsText(fileList[i]);
+				//文件读取完毕后该函数响应
+				var size = fileList[i].size;
+				
+	            reader.onload = function loaded(evt) {
+	                var binaryString = evt.target.result;
+	                // Handle UTF-16 file dump
+	                log("\n开始发送文件");
+	                ws.send(binaryString,size);
+	            };*/
+	            /*alert("1:"+localMediaStream);
+	            alert("2:"+URL.createObjectURL(localMediaStream));
+	            alert("3:"+window.URL.createObjectURL(localMediaStream));
+	            if (localMediaStream instanceof Blob){
+	            	alert("1这是blob");
+	            }
+	            if (URL.createObjectURL(localMediaStream) instanceof Blob){
+	            	alert("2这是blob");
+	            }
+	            if (window.URL.createObjectURL(localMediaStream) instanceof Blob){
+	            	alert("3这是blob");
+	            }*/
+	            //var reader = new FileReader();
+	            //reader.readAsBinaryString(window.URL.createObjectURL(localMediaStream));
+	            
+	            //alert(reader.size);
+				ws.send(window.URL.createObjectURL(localMediaStream));
+	            
+			}, function(e) {
+				console.log('Reeeejected!', e);
+			});
+			
 		} else {
 			alert('connection not established, please connect.');
 		}
@@ -150,6 +281,17 @@
 		}
 		console.scrollTop = console.scrollHeight;
 	}
+	
+	$(document).ready(function(){  
+	    //$("#a").click(function(){  
+	        var url = 'http://chaxun.1616.net/s.php?type=ip&output=json&callback=?&_='+Math.random();    
+	        $.getJSON(url, function(data){
+				//alert(data);
+	            $("#b").html("显示：IP【"+data.Ip+"】 地址【"+data.Isp+"】 浏览器【"+data.Browser+"】 系统【"+data.OS+"】");  
+	        });   
+	    //});  
+	});  
+	
 </script>
 
 </head>
@@ -196,11 +338,32 @@
 				<button id="echo" onclick="echo();" disabled="disabled">Echo
 					message</button>
 			</div>
+			<!-- send file start -->
+			<div>
+				<input id="file" type="file" multiple />
+			</div>
+			<div>
+				<button id="echo_file" onclick="echo_file();" disabled="disabled">Echo
+					file</button>
+			</div>
+			<div>
+				<button id="send_video" onclick="send_video();" disabled="disabled">video</button>
+			</div>
+			<!-- send file end -->
 		</div>
 		<div id="console-container">
 			<div id="console"></div>
 		</div>
+		<div id="imgDiv"></div>
+		<video id="video" autoplay></video>
 	</div>
+	
+	<a href="javascript:;" style="margin-left:100px;"><span id="a" style="color: #000;font-size:18px;border:#000 0px solid;">Click Me</span></a>  
+    <br/>  
+    <br/>  
+    <br/>  
+    <br/>  
+    <span id="b" style="color: #000;font-size:18px;border:#000 0px solid;">显示：点击上方【Click Me】显示ip详情！</span>
 	
 </body>
 </html>
